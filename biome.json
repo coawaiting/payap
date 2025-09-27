@@ -10,8 +10,14 @@
     "enabled": true
   },
   "files": {
-    "ignoreUnknown": false,
-    "includes": ["**/*", "!**/generated/*", "!.husky/", "!node_modules/"]
+    "ignoreUnknown": true,
+    "includes": [
+      "**/*",
+      "!**/generated/*",
+      "!.github/",
+      "!.husky/",
+      "!node_modules/"
+    ]
   },
   "formatter": {
     "enabled": true,
