@@ -9,22 +9,22 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 export const protobufPackage = "users.v1";
 
-export interface CreateUserRequest {
+export interface CreateUserRequestMessage {
 }
 
-function createBaseCreateUserRequest(): CreateUserRequest {
+function createBaseCreateUserRequestMessage(): CreateUserRequestMessage {
   return {};
 }
 
-export const CreateUserRequest: MessageFns<CreateUserRequest> = {
-  encode(_: CreateUserRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+export const CreateUserRequestMessage: MessageFns<CreateUserRequestMessage> = {
+  encode(_: CreateUserRequestMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateUserRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number): CreateUserRequestMessage {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateUserRequest();
+    const message = createBaseCreateUserRequestMessage();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -37,20 +37,20 @@ export const CreateUserRequest: MessageFns<CreateUserRequest> = {
     return message;
   },
 
-  fromJSON(_: any): CreateUserRequest {
+  fromJSON(_: any): CreateUserRequestMessage {
     return {};
   },
 
-  toJSON(_: CreateUserRequest): unknown {
+  toJSON(_: CreateUserRequestMessage): unknown {
     const obj: any = {};
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateUserRequest>, I>>(base?: I): CreateUserRequest {
-    return CreateUserRequest.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CreateUserRequestMessage>, I>>(base?: I): CreateUserRequestMessage {
+    return CreateUserRequestMessage.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateUserRequest>, I>>(_: I): CreateUserRequest {
-    const message = createBaseCreateUserRequest();
+  fromPartial<I extends Exact<DeepPartial<CreateUserRequestMessage>, I>>(_: I): CreateUserRequestMessage {
+    const message = createBaseCreateUserRequestMessage();
     return message;
   },
 };

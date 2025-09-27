@@ -2,33 +2,33 @@
 // versions:
 //   protoc-gen-ts_proto  v2.7.7
 //   protoc               v6.32.1
-// source: v1/messages/createUserResponse.message.proto
+// source: v1/messages/createTransactionResponse.message.proto
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
-export const protobufPackage = "users.v1";
+export const protobufPackage = "transactions.v1";
 
-export interface CreateUserResponseMessage {
-  userUuid: string;
+export interface CreateTransactionResponseMessage {
+  transactionUuid: string;
 }
 
-function createBaseCreateUserResponseMessage(): CreateUserResponseMessage {
-  return { userUuid: "" };
+function createBaseCreateTransactionResponseMessage(): CreateTransactionResponseMessage {
+  return { transactionUuid: "" };
 }
 
-export const CreateUserResponseMessage: MessageFns<CreateUserResponseMessage> = {
-  encode(message: CreateUserResponseMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.userUuid !== "") {
-      writer.uint32(10).string(message.userUuid);
+export const CreateTransactionResponseMessage: MessageFns<CreateTransactionResponseMessage> = {
+  encode(message: CreateTransactionResponseMessage, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.transactionUuid !== "") {
+      writer.uint32(10).string(message.transactionUuid);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): CreateUserResponseMessage {
+  decode(input: BinaryReader | Uint8Array, length?: number): CreateTransactionResponseMessage {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     const end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseCreateUserResponseMessage();
+    const message = createBaseCreateTransactionResponseMessage();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -37,7 +37,7 @@ export const CreateUserResponseMessage: MessageFns<CreateUserResponseMessage> = 
             break;
           }
 
-          message.userUuid = reader.string();
+          message.transactionUuid = reader.string();
           continue;
         }
       }
@@ -49,24 +49,28 @@ export const CreateUserResponseMessage: MessageFns<CreateUserResponseMessage> = 
     return message;
   },
 
-  fromJSON(object: any): CreateUserResponseMessage {
-    return { userUuid: isSet(object.userUuid) ? globalThis.String(object.userUuid) : "" };
+  fromJSON(object: any): CreateTransactionResponseMessage {
+    return { transactionUuid: isSet(object.transactionUuid) ? globalThis.String(object.transactionUuid) : "" };
   },
 
-  toJSON(message: CreateUserResponseMessage): unknown {
+  toJSON(message: CreateTransactionResponseMessage): unknown {
     const obj: any = {};
-    if (message.userUuid !== "") {
-      obj.userUuid = message.userUuid;
+    if (message.transactionUuid !== "") {
+      obj.transactionUuid = message.transactionUuid;
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CreateUserResponseMessage>, I>>(base?: I): CreateUserResponseMessage {
-    return CreateUserResponseMessage.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<CreateTransactionResponseMessage>, I>>(
+    base?: I,
+  ): CreateTransactionResponseMessage {
+    return CreateTransactionResponseMessage.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<CreateUserResponseMessage>, I>>(object: I): CreateUserResponseMessage {
-    const message = createBaseCreateUserResponseMessage();
-    message.userUuid = object.userUuid ?? "";
+  fromPartial<I extends Exact<DeepPartial<CreateTransactionResponseMessage>, I>>(
+    object: I,
+  ): CreateTransactionResponseMessage {
+    const message = createBaseCreateTransactionResponseMessage();
+    message.transactionUuid = object.transactionUuid ?? "";
     return message;
   },
 };

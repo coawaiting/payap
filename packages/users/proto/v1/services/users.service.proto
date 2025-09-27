@@ -6,5 +6,5 @@ import "v1/messages/createUserRequest.message.proto";
 import "v1/messages/createUserResponse.message.proto";
 
 service UsersService {
-  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+  rpc CreateUser (CreateUserRequestMessage) returns (CreateUserResponseMessage);
 }

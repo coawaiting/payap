@@ -17,8 +17,8 @@ import {
   type ServiceError,
   type UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateUserRequest } from "../messages/createUserRequest.message";
-import { CreateUserResponse } from "../messages/createUserResponse.message";
+import { CreateUserRequestMessage } from "../messages/createUserRequest.message";
+import { CreateUserResponseMessage } from "../messages/createUserResponse.message";
 
 export const protobufPackage = "users.v1";
 
@@ -28,32 +28,34 @@ export const UsersServiceService = {
     path: "/users.v1.UsersService/CreateUser",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: CreateUserRequest): Buffer => Buffer.from(CreateUserRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer): CreateUserRequest => CreateUserRequest.decode(value),
-    responseSerialize: (value: CreateUserResponse): Buffer => Buffer.from(CreateUserResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer): CreateUserResponse => CreateUserResponse.decode(value),
+    requestSerialize: (value: CreateUserRequestMessage): Buffer =>
+      Buffer.from(CreateUserRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): CreateUserRequestMessage => CreateUserRequestMessage.decode(value),
+    responseSerialize: (value: CreateUserResponseMessage): Buffer =>
+      Buffer.from(CreateUserResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): CreateUserResponseMessage => CreateUserResponseMessage.decode(value),
   },
 } as const;
 
 export interface UsersServiceServer extends UntypedServiceImplementation {
-  createUser: handleUnaryCall<CreateUserRequest, CreateUserResponse>;
+  createUser: handleUnaryCall<CreateUserRequestMessage, CreateUserResponseMessage>;
 }
 
 export interface UsersServiceClient extends Client {
   createUser(
-    request: CreateUserRequest,
-    callback: (error: ServiceError | null, response: CreateUserResponse) => void,
+    request: CreateUserRequestMessage,
+    callback: (error: ServiceError | null, response: CreateUserResponseMessage) => void,
   ): ClientUnaryCall;
   createUser(
-    request: CreateUserRequest,
+    request: CreateUserRequestMessage,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: CreateUserResponse) => void,
+    callback: (error: ServiceError | null, response: CreateUserResponseMessage) => void,
   ): ClientUnaryCall;
   createUser(
-    request: CreateUserRequest,
+    request: CreateUserRequestMessage,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: CreateUserResponse) => void,
+    callback: (error: ServiceError | null, response: CreateUserResponseMessage) => void,
   ): ClientUnaryCall;
 }
 

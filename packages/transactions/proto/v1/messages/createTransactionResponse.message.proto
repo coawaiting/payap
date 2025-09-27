@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package transactions.v1;
+
+message CreateTransactionResponseMessage {
+  string transaction_uuid = 1;
+}

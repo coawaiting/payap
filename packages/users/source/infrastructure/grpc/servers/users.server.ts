@@ -3,7 +3,7 @@ import { Server } from '@grpc/grpc-js';
 import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
 import type { AbstractUsersService } from '@payap/users/core/services/users.service.ts';
-import type { CreateUserResponse } from '@payap/users/generated/v1/messages/createUserResponse.message.ts';
+import type { CreateUserResponseMessage } from '@payap/users/generated/v1/messages/createUserResponse.message.ts';
 import {
   type UsersServiceServer,
   UsersServiceService,
@@ -19,7 +19,7 @@ export const createUsersServer = async ({
       try {
         const user = await usersService.createUser();
 
-        const output: CreateUserResponse = {
+        const output: CreateUserResponseMessage = {
           userUuid: user.uuid,
         };
 
@@ -31,6 +31,8 @@ export const createUsersServer = async ({
   };
 
   const server = new Server();
+
+  server.addService(UsersServiceService, implementation);
 
   const packageDefinition = await load(
     path.resolve(
@@ -45,8 +47,6 @@ export const createUsersServer = async ({
   const reflection = new ReflectionService(packageDefinition);
 
   reflection.addToServer(server);
-
-  server.addService(UsersServiceService, implementation);
 
   return server;
 };

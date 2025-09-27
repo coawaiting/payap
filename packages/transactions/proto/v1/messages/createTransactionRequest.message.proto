@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package transactions.v1;
+
+import "v1/enums/transactionType.enum.proto";
+
+message CreateTransactionRequestMessage {
+  string              amount           = 1;
+  TransactionTypeEnum transaction_type = 2;  
+}

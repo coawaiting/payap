@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package transactions.v1;
+
+import "v1/messages/createTransactionRequest.message.proto";
+import "v1/messages/createTransactionResponse.message.proto";
+
+service TransactionsService {
+  rpc CreateTransaction (CreateTransactionRequestMessage) returns (CreateTransactionResponseMessage);
+}
