@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package users.v1;
+
+import "v1/messages/createUserRequest.message.proto";
+import "v1/messages/createUserResponse.message.proto";
+
+service UsersService {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+}

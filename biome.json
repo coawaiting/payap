@@ -11,7 +11,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/*", "!.husky/", "!node_modules/"]
+    "includes": ["**/*", "!**/generated/*", "!.husky/", "!node_modules/"]
   },
   "formatter": {
     "enabled": true,
