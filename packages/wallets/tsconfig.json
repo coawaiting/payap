@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build/",
+    "paths": {
+      "@payap/wallets/*": ["source/*"]
+    },
+    "rootDir": "source/",
+    "types": ["node"]
+  },
+  "exclude": ["build/"],
+  "extends": ["../../tsconfig.json"],
+  "include": ["source/"]
+}

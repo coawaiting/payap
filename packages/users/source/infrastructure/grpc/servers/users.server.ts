@@ -40,7 +40,9 @@ export const createUsersServer = async ({
       '../proto/v1/services/users.service.proto',
     ),
     {
-      includeDirs: [path.resolve(import.meta.dirname, '../proto/')],
+      includeDirs: [
+        path.resolve(import.meta.dirname, '../proto/'),
+      ],
     },
   );
 

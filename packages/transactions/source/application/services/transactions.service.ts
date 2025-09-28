@@ -6,7 +6,9 @@ import { TransactionTypeEnum } from '@payap/transactions/core/enums/transactionT
 import type { AbstractTransactionsRepository } from '@payap/transactions/core/repositories/transactions.repository.ts';
 import type { AbstractTransactionsService } from '@payap/transactions/core/services/transactions.service.ts';
 
-export class TransactionsService implements AbstractTransactionsService {
+export class TransactionsService
+  implements AbstractTransactionsService
+{
   private readonly transactionsRepository: AbstractTransactionsRepository;
 
   public constructor({
@@ -56,7 +58,9 @@ export class TransactionsService implements AbstractTransactionsService {
       }
     }
 
-    await this.transactionsRepository.saveTransaction({ transaction });
+    await this.transactionsRepository.saveTransaction({
+      transaction,
+    });
 
     return transaction;
   }

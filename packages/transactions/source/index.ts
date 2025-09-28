@@ -3,7 +3,9 @@ import { globalContainer } from '@payap/transactions/infrastructure/containers/g
 import { createTransactionsServer } from '@payap/transactions/infrastructure/grpc/servers/transactions.server.ts';
 
 const start = async () => {
-  const transactionsService = globalContainer.resolve('transactionsService');
+  const transactionsService = globalContainer.resolve(
+    'transactionsService',
+  );
 
   const server = await createTransactionsServer({
     transactionsService,

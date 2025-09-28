@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.0",
+    "@grpc/proto-loader": "^0.8.0",
+    "@grpc/reflection": "^1.0.4",
+    "awilix": "^12.0.5",
+    "bignumber.js": "^9.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "protoc": "^32.1.0",
+    "ts-proto": "^2.7.7",
+    "tsup": "^8.5.0"
+  },
+  "license": "ISC",
+  "main": "build/index.js",
+  "name": "@payap/wallets",
+  "scripts": {
+    "build": "tsup",
+    "protoc": "protoc --plugin=../../node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true,outputServices=grpc-js,env=node,outputClientImpl=grpc-web --ts_proto_out=./source/generated/ -I ./proto/ $(find ./proto -type f -name '*.proto')",
+    "start": "node build/index.js"
+  },
+  "type": "module",
+  "types": "build/index.d.ts"
+}

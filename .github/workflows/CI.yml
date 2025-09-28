@@ -37,6 +37,24 @@ jobs:
 
       - name: Build users microservice
         run: npx lerna run build --scope @payap/users
+  build-wallets:
+    name: build / wallets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm clean-install
+
+      - name: Build wallets microservice
+        run: npx lerna run build --scope @payap/wallets
 name: CI
 
 'on':

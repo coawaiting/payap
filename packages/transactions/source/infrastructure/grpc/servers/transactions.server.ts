@@ -20,12 +20,14 @@ export const createTransactionsServer = async ({
   const implementation: TransactionsServiceServer = {
     createTransaction: async (call, callback) => {
       try {
-        const input: CreateTransactionRequestMessage = call.request;
+        const input: CreateTransactionRequestMessage =
+          call.request;
 
-        const transaction = await transactionsService.createTransaction({
-          amount: BigNumber(input.amount),
-          transactionType: TransactionTypeEnum.Payout,
-        });
+        const transaction =
+          await transactionsService.createTransaction({
+            amount: BigNumber(input.amount),
+            transactionType: TransactionTypeEnum.Payout,
+          });
 
         const output: CreateTransactionResponseMessage = {
           transactionUuid: transaction.uuid,
@@ -48,7 +50,9 @@ export const createTransactionsServer = async ({
       '../proto/v1/services/transactions.service.proto',
     ),
     {
-      includeDirs: [path.resolve(import.meta.dirname, '../proto/')],
+      includeDirs: [
+        path.resolve(import.meta.dirname, '../proto/'),
+      ],
     },
   );
 

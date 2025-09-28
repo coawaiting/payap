@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package wallets.v1;
+
+import "v1/messages/createWalletRequest.message.proto";
+import "v1/messages/createWalletResponse.message.proto";
+
+service WalletsService {
+  rpc CreateWallet (CreateWalletRequestMessage) returns (CreateWalletResponseMessage);
+}
