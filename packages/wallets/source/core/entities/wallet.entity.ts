@@ -24,10 +24,14 @@ export class WalletEntity {
     }
 
     this.balance = newBalance;
+
+    return this;
   }
 
   public increaseBalance({ value }: { value: BigNumber }) {
     this.balance = this.balance.plus(value);
+
+    return this;
   }
 
   public showBalance() {

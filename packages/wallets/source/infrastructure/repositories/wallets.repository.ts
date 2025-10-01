@@ -16,5 +16,7 @@ export class WalletsRepository
     wallet: WalletEntity;
   }) {
     this.wallets.set(wallet.uuid, wallet);
+
+    return wallet;
   }
 }

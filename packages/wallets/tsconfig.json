@@ -5,8 +5,7 @@
     "paths": {
       "@payap/wallets/*": ["source/*"]
     },
-    "rootDir": "source/",
-    "types": ["node"]
+    "rootDir": "source/"
   },
   "exclude": ["build/"],
   "extends": ["../../tsconfig.json"],

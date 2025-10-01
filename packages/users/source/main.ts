@@ -10,7 +10,7 @@ const start = async () => {
   });
 
   server.bindAsync(
-    '0.0.0.0:59876',
+    '0.0.0.0:59875',
     ServerCredentials.createInsecure(),
     (error) => {
       if (error) {

@@ -8,6 +8,7 @@ import {
   type UsersServiceServer,
   UsersServiceService,
 } from '@payap/users/generated/v1/services/users.service.ts';
+import { createWallet } from '@payap/users/infrastructure/grpc/clients/wallets.client.ts';
 
 export const createUsersServer = async ({
   usersService,
@@ -19,13 +20,19 @@ export const createUsersServer = async ({
       try {
         const user = await usersService.createUser();
 
+        await createWallet({
+          user: {
+            uuid: user.uuid,
+          },
+        });
+
         const output: CreateUserResponseMessage = {
           userUuid: user.uuid,
         };
 
         callback(null, output);
       } catch (error) {
-        callback(error as Error, null as unknown);
+        callback(error as Error, null);
       }
     },
   };

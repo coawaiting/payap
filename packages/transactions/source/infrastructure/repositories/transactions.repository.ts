@@ -12,5 +12,7 @@ export class TransactionsRepository
     transaction: TransactionEntity;
   }) {
     this.transactions.set(transaction.uuid, transaction);
+
+    return transaction;
   }
 }

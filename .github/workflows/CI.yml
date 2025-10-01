@@ -1,15 +1,13 @@
 ---
 
 jobs:
-  build-transactions:
-    name: build / transactions
+  build:
+    name: build / ${{ matrix.microservice }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           cache: npm
           node-version: 22
@@ -17,44 +15,12 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
 
-      - name: Build transactions microservice
-        run: npx lerna run build --scope @payap/transactions
-  build-users:
-    name: build / users
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Build ${{ matrix.microservice }} microservice
+        run: npx lerna run build --scope @payap/${{ matrix.microservice }}
+    strategy:
+      matrix:
+        microservice: [transactions, users, wallets]
 
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          cache: npm
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm clean-install
-
-      - name: Build users microservice
-        run: npx lerna run build --scope @payap/users
-  build-wallets:
-    name: build / wallets
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          cache: npm
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm clean-install
-
-      - name: Build wallets microservice
-        run: npx lerna run build --scope @payap/wallets
 name: CI
 
 'on':

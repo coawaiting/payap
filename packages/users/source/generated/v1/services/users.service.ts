@@ -17,8 +17,8 @@ import {
   type ServiceError,
   type UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateUserRequestMessage } from "../messages/createUserRequest.message";
-import { CreateUserResponseMessage } from "../messages/createUserResponse.message";
+import { CreateUserRequestMessage } from "../messages/createUserRequest.message.ts";
+import { CreateUserResponseMessage } from "../messages/createUserResponse.message.ts";
 
 export const protobufPackage = "users.v1";
 

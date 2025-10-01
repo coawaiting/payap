@@ -5,13 +5,13 @@ export abstract class AbstractUsersService {
     user,
   }: {
     user: UserEntity;
-  }): Promise<void>;
+  }): Promise<UserEntity>;
 
   abstract blockUser({
     user,
   }: {
     user: UserEntity;
-  }): Promise<void>;
+  }): Promise<UserEntity>;
 
   abstract createUser(): Promise<UserEntity>;
 
@@ -19,5 +19,5 @@ export abstract class AbstractUsersService {
     user,
   }: {
     user: UserEntity;
-  }): Promise<void>;
+  }): Promise<UserEntity>;
 }

@@ -17,8 +17,8 @@ import {
   type ServiceError,
   type UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateWalletRequestMessage } from "../messages/createWalletRequest.message";
-import { CreateWalletResponseMessage } from "../messages/createWalletResponse.message";
+import { CreateWalletRequestMessage } from "../messages/createWalletRequest.message.ts";
+import { CreateWalletResponseMessage } from "../messages/createWalletResponse.message.ts";
 
 export const protobufPackage = "wallets.v1";
 

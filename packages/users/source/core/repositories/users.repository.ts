@@ -5,11 +5,11 @@ export abstract class AbstractUsersRepository {
     user,
   }: {
     user: UserEntity;
-  }): Promise<void>;
+  }): Promise<UserEntity>;
 
   abstract saveUser({
     user,
   }: {
     user: UserEntity;
-  }): Promise<void>;
+  }): Promise<UserEntity>;
 }

@@ -3,8 +3,8 @@
     "@grpc/grpc-js": "^1.14.0",
     "@grpc/proto-loader": "^0.8.0",
     "@grpc/reflection": "^1.0.4",
-    "awilix": "^12.0.5",
-    "bignumber.js": "^9.3.0"
+    "@payap/wallets": "*",
+    "awilix": "^12.0.5"
   },
   "devDependencies": {
     "@types/node": "^24.5.2",
@@ -13,13 +13,12 @@
     "tsup": "^8.5.0"
   },
   "license": "ISC",
-  "main": "build/index.js",
+  "main": "build/main.js",
   "name": "@payap/transactions",
   "scripts": {
     "build": "tsup",
-    "protoc": "protoc --plugin=../../node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true,outputServices=grpc-js,env=node,outputClientImpl=grpc-web --ts_proto_out=./source/generated/ -I ./proto/ $(find ./proto -type f -name '*.proto')",
-    "start": "node build/index.js"
+    "protoc": "protoc --plugin=../../node_modules/.bin/protoc-gen-ts_proto --proto_path proto/ --ts_proto_opt=env=node,esModuleInterop=true,importSuffix=.ts,outputClientImpl=grpc-web,outputServices=grpc-js --ts_proto_out=source/generated/ $(find proto/ -type f -name '*.proto')",
+    "start": "node build/main.js"
   },
-  "type": "module",
-  "types": "build/index.d.ts"
+  "type": "module"
 }

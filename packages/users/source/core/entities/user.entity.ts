@@ -14,10 +14,14 @@ export class UserEntity {
 
   public activate() {
     this.status = UserStatus.Active;
+
+    return this;
   }
 
   public block() {
     this.status = UserStatus.Blocked;
+
+    return this;
   }
 
   public isActive() {

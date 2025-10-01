@@ -1,8 +1,8 @@
 import { TransactionEntity } from '@payap/transactions/core/entities/transaction.entity.ts';
 
 export class TransferEntity extends TransactionEntity {
-  public readonly walletFrom: string;
-  public readonly walletTo: string;
+  public readonly walletFrom: 'test';
+  public readonly walletTo: 'test';
 
   public constructor({
     amount,
@@ -10,8 +10,8 @@ export class TransferEntity extends TransactionEntity {
     walletTo,
   }: {
     amount: BigNumber;
-    walletFrom: string;
-    walletTo: string;
+    walletFrom: 'test';
+    walletTo: 'test';
   }) {
     super({ amount });
 

@@ -17,8 +17,8 @@ import {
   type ServiceError,
   type UntypedServiceImplementation,
 } from "@grpc/grpc-js";
-import { CreateTransactionRequestMessage } from "../messages/createTransactionRequest.message";
-import { CreateTransactionResponseMessage } from "../messages/createTransactionResponse.message";
+import { CreateTransactionRequestMessage } from "../messages/createTransactionRequest.message.ts";
+import { CreateTransactionResponseMessage } from "../messages/createTransactionResponse.message.ts";
 
 export const protobufPackage = "transactions.v1";
 

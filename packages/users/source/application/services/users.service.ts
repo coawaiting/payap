@@ -17,12 +17,16 @@ export class UsersService implements AbstractUsersService {
     user.activate();
 
     await this.usersRepository.saveUser({ user });
+
+    return user;
   }
 
   public async blockUser({ user }: { user: UserEntity }) {
     user.block();
 
     await this.usersRepository.saveUser({ user });
+
+    return user;
   }
 
   public async createUser() {
@@ -35,5 +39,7 @@ export class UsersService implements AbstractUsersService {
 
   public async deleteUser({ user }: { user: UserEntity }) {
     await this.usersRepository.deleteUser({ user });
+
+    return user;
   }
 }

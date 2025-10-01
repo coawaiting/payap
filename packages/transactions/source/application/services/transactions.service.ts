@@ -32,8 +32,8 @@ export class TransactionsService
       case TransactionTypeEnum.Payout: {
         transaction = new PayoutEntity({
           amount,
-          provider: 'local',
-          wallet: 'local',
+          provider: 'test',
+          wallet: 'test',
         });
 
         break;
@@ -41,8 +41,8 @@ export class TransactionsService
       case TransactionTypeEnum.Topup: {
         transaction = new TopupEntity({
           amount,
-          provider: 'local',
-          wallet: 'local',
+          provider: 'test',
+          wallet: 'test',
         });
 
         break;
@@ -50,8 +50,8 @@ export class TransactionsService
       case TransactionTypeEnum.Transfer: {
         transaction = new TransferEntity({
           amount,
-          walletFrom: 'local',
-          walletTo: 'local',
+          walletFrom: 'test',
+          walletTo: 'test',
         });
 
         break;

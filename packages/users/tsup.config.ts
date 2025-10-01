@@ -1,9 +1,9 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
+  bundle: true,
   clean: true,
-  dts: true,
-  entry: ['source/index.ts'],
+  entry: ['source/main.ts'],
   external: [
     '@grpc/grpc-js',
     '@grpc/proto-loader',
@@ -11,7 +11,9 @@ export default defineConfig({
   ],
   format: ['esm'],
   outDir: 'build/',
+  platform: 'node',
   skipNodeModulesBundle: true,
   sourcemap: true,
+  target: 'node22',
   tsconfig: 'tsconfig.json',
 });

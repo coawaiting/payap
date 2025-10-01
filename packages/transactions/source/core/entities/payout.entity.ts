@@ -1,8 +1,8 @@
 import { TransactionEntity } from '@payap/transactions/core/entities/transaction.entity.ts';
 
 export class PayoutEntity extends TransactionEntity {
-  public readonly provider: string;
-  public readonly wallet: string;
+  public readonly provider: 'test';
+  public readonly wallet: 'test';
 
   public constructor({
     amount,
@@ -10,8 +10,8 @@ export class PayoutEntity extends TransactionEntity {
     wallet,
   }: {
     amount: BigNumber;
-    provider: string;
-    wallet: string;
+    provider: 'test';
+    wallet: 'test';
   }) {
     super({ amount });
 

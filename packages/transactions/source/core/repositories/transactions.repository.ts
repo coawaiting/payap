@@ -5,5 +5,5 @@ export abstract class AbstractTransactionsRepository {
     transaction,
   }: {
     transaction: TransactionEntity;
-  }): Promise<void>;
+  }): Promise<TransactionEntity>;
 }

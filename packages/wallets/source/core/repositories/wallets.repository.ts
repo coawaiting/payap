@@ -5,5 +5,5 @@ export abstract class AbstractWalletsRepository {
     wallet,
   }: {
     wallet: WalletEntity;
-  }): Promise<void>;
+  }): Promise<WalletEntity>;
 }

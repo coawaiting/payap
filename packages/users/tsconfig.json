@@ -5,8 +5,7 @@
     "paths": {
       "@payap/users/*": ["source/*"]
     },
-    "rootDir": "source/",
-    "types": ["node"]
+    "rootDir": "source/"
   },
   "exclude": ["build/"],
   "extends": ["../../tsconfig.json"],

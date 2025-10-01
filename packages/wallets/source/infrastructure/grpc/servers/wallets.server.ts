@@ -4,7 +4,6 @@ import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
 import { UserEntity } from '@payap/wallets/core/entities/user.entity.ts';
 import type { AbstractWalletsService } from '@payap/wallets/core/services/wallets.service.ts';
-import type { CreateWalletRequestMessage } from '@payap/wallets/generated/v1/messages/createWalletRequest.message.ts';
 import type { CreateWalletResponseMessage } from '@payap/wallets/generated/v1/messages/createWalletResponse.message.ts';
 import {
   type WalletsServiceServer,
@@ -19,7 +18,7 @@ export const createWalletsServer = async ({
   const implementation: WalletsServiceServer = {
     createWallet: async (call, callback) => {
       try {
-        const input: CreateWalletRequestMessage = call.request;
+        const input = call.request;
 
         const wallet = await walletsService.createWallet({
           user: new UserEntity({ uuid: input.userUuid }),
@@ -31,7 +30,7 @@ export const createWalletsServer = async ({
 
         callback(null, output);
       } catch (error) {
-        callback(error as Error, null as unknown);
+        callback(error as Error, null);
       }
     },
   };

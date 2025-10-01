@@ -10,7 +10,7 @@ import {
   TransactionTypeEnum,
   transactionTypeEnumFromJSON,
   transactionTypeEnumToJSON,
-} from "../enums/transactionType.enum";
+} from "../enums/transactionType.enum.ts";
 
 export const protobufPackage = "transactions.v1";
 

@@ -4,7 +4,6 @@ import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
 import { TransactionTypeEnum } from '@payap/transactions/core/enums/transactionType.enum.ts';
 import type { AbstractTransactionsService } from '@payap/transactions/core/services/transactions.service.ts';
-import type { CreateTransactionRequestMessage } from '@payap/transactions/generated/v1/messages/createTransactionRequest.message.ts';
 import type { CreateTransactionResponseMessage } from '@payap/transactions/generated/v1/messages/createTransactionResponse.message.ts';
 import {
   type TransactionsServiceServer,
@@ -20,8 +19,7 @@ export const createTransactionsServer = async ({
   const implementation: TransactionsServiceServer = {
     createTransaction: async (call, callback) => {
       try {
-        const input: CreateTransactionRequestMessage =
-          call.request;
+        const input = call.request;
 
         const transaction =
           await transactionsService.createTransaction({
@@ -35,7 +33,7 @@ export const createTransactionsServer = async ({
 
         callback(null, output);
       } catch (error) {
-        callback(error as Error, null as unknown);
+        callback(error as Error, null);
       }
     },
   };

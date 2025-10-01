@@ -8,9 +8,13 @@ export class UsersRepository
 
   public async deleteUser({ user }: { user: UserEntity }) {
     this.users.delete(user.uuid);
+
+    return user;
   }
 
   public async saveUser({ user }: { user: UserEntity }) {
     this.users.set(user.uuid, user);
+
+    return user;
   }
 }
