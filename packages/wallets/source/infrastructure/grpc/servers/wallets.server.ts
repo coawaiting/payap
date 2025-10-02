@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { Server } from '@grpc/grpc-js';
+import { Server, ServerCredentials } from '@grpc/grpc-js';
 import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
 import { UserEntity } from '@payap/wallets/core/entities/user.entity.ts';
@@ -10,50 +10,92 @@ import {
   WalletsServiceService,
 } from '@payap/wallets/generated/v1/services/wallets.service.ts';
 
-export const createWalletsServer = async ({
-  walletsService,
-}: {
-  walletsService: AbstractWalletsService;
-}) => {
-  const implementation: WalletsServiceServer = {
-    createWallet: async (call, callback) => {
-      try {
-        const input = call.request;
+export class WalletsServer {
+  private readonly server: Server;
 
-        const wallet = await walletsService.createWallet({
-          user: new UserEntity({ uuid: input.userUuid }),
-        });
+  private readonly walletsService: AbstractWalletsService;
 
-        const output: CreateWalletResponseMessage = {
-          walletUuid: wallet.uuid,
-        };
+  public constructor({
+    walletsService,
+  }: {
+    walletsService: AbstractWalletsService;
+  }) {
+    this.server = new Server();
 
-        callback(null, output);
-      } catch (error) {
-        callback(error as Error, null);
-      }
-    },
-  };
+    this.walletsService = walletsService;
+  }
 
-  const server = new Server();
+  private async addReflection() {
+    const packageDefinition = await load(
+      path.resolve(
+        import.meta.dirname,
+        '../proto/v1/services/wallets.service.proto',
+      ),
+      {
+        includeDirs: [
+          path.resolve(import.meta.dirname, '../proto/'),
+        ],
+      },
+    );
 
-  server.addService(WalletsServiceService, implementation);
+    const reflection = new ReflectionService(packageDefinition);
 
-  const packageDefinition = await load(
-    path.resolve(
-      import.meta.dirname,
-      '../proto/v1/services/wallets.service.proto',
-    ),
-    {
-      includeDirs: [
-        path.resolve(import.meta.dirname, '../proto/'),
-      ],
-    },
-  );
+    reflection.addToServer(this.server);
+  }
 
-  const reflection = new ReflectionService(packageDefinition);
+  private async addServices() {
+    const implementation: WalletsServiceServer = {
+      createWallet: async (call, callback) => {
+        try {
+          const input = call.request;
 
-  reflection.addToServer(server);
+          const user = new UserEntity({
+            uuid: input.userUuid,
+          });
 
-  return server;
-};
+          const wallet = await this.walletsService.createWallet(
+            {
+              user,
+            },
+          );
+
+          const output: CreateWalletResponseMessage = {
+            walletUuid: wallet.uuid,
+          };
+
+          callback(null, output);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+    };
+
+    this.server.addService(
+      WalletsServiceService,
+      implementation,
+    );
+  }
+
+  public async initialize() {
+    await this.addReflection();
+    await this.addServices();
+  }
+
+  public run() {
+    return new Promise<void>((resolve, reject) => {
+      this.server.bindAsync(
+        '0.0.0.0:59874',
+        ServerCredentials.createInsecure(),
+        (error) => {
+          if (error) {
+            reject(error);
+
+            return;
+          }
+
+          resolve();
+        },
+      );
+    });
+  }
+}

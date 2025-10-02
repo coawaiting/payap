@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { Server } from '@grpc/grpc-js';
+import { Server, ServerCredentials } from '@grpc/grpc-js';
 import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
 import type { AbstractUsersService } from '@payap/users/core/services/users.service.ts';
@@ -8,54 +8,78 @@ import {
   type UsersServiceServer,
   UsersServiceService,
 } from '@payap/users/generated/v1/services/users.service.ts';
-import { createWallet } from '@payap/users/infrastructure/grpc/clients/wallets.client.ts';
 
-export const createUsersServer = async ({
-  usersService,
-}: {
-  usersService: AbstractUsersService;
-}) => {
-  const implementation: UsersServiceServer = {
-    createUser: async (_, callback) => {
-      try {
-        const user = await usersService.createUser();
+export class UsersServer {
+  private readonly server: Server;
+  private readonly usersService: AbstractUsersService;
 
-        await createWallet({
-          user: {
-            uuid: user.uuid,
-          },
-        });
+  public constructor({
+    usersService,
+  }: {
+    usersService: AbstractUsersService;
+  }) {
+    this.server = new Server();
+    this.usersService = usersService;
+  }
 
-        const output: CreateUserResponseMessage = {
-          userUuid: user.uuid,
-        };
+  public async addReflection() {
+    const packageDefinition = await load(
+      path.resolve(
+        import.meta.dirname,
+        '../proto/v1/services/users.service.proto',
+      ),
+      {
+        includeDirs: [
+          path.resolve(import.meta.dirname, '../proto/'),
+        ],
+      },
+    );
 
-        callback(null, output);
-      } catch (error) {
-        callback(error as Error, null);
-      }
-    },
-  };
+    const reflection = new ReflectionService(packageDefinition);
 
-  const server = new Server();
+    reflection.addToServer(this.server);
+  }
 
-  server.addService(UsersServiceService, implementation);
+  public async addServices() {
+    const implementation: UsersServiceServer = {
+      createUser: async (_, callback) => {
+        try {
+          const user = await this.usersService.createUser();
 
-  const packageDefinition = await load(
-    path.resolve(
-      import.meta.dirname,
-      '../proto/v1/services/users.service.proto',
-    ),
-    {
-      includeDirs: [
-        path.resolve(import.meta.dirname, '../proto/'),
-      ],
-    },
-  );
+          const output: CreateUserResponseMessage = {
+            userUuid: user.uuid,
+          };
 
-  const reflection = new ReflectionService(packageDefinition);
+          callback(null, output);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+    };
 
-  reflection.addToServer(server);
+    this.server.addService(UsersServiceService, implementation);
+  }
 
-  return server;
-};
+  public async initialize() {
+    await this.addReflection();
+    await this.addServices();
+  }
+
+  public run() {
+    return new Promise<void>((resolve, reject) => {
+      this.server.bindAsync(
+        '0.0.0.0:59875',
+        ServerCredentials.createInsecure(),
+        (error) => {
+          if (error) {
+            reject(error);
+
+            return;
+          }
+
+          resolve();
+        },
+      );
+    });
+  }
+}

@@ -9,7 +9,11 @@ export class WalletEntity {
   public readonly user: UserEntity;
   public readonly uuid: string;
 
-  public constructor({ user }: { user: UserEntity }) {
+  public constructor({
+    user,
+  }: {
+    user: UserEntity;
+  }) {
     this.balance = new BigNumber(0);
 
     this.user = user;

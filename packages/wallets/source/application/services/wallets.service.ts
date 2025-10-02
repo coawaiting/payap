@@ -15,9 +15,13 @@ export class WalletsService implements AbstractWalletsService {
   }
 
   public async createWallet({ user }: { user: UserEntity }) {
-    const wallet = new WalletEntity({ user });
+    const wallet = new WalletEntity({
+      user,
+    });
 
-    await this.walletsRepository.saveWallet({ wallet });
+    await this.walletsRepository.saveWallet({
+      wallet,
+    });
 
     return wallet;
   }
@@ -29,9 +33,13 @@ export class WalletsService implements AbstractWalletsService {
     value: BigNumber;
     wallet: WalletEntity;
   }) {
-    wallet.decreaseBalance({ value });
+    wallet.decreaseBalance({
+      value,
+    });
 
-    await this.walletsRepository.saveWallet({ wallet });
+    await this.walletsRepository.saveWallet({
+      wallet,
+    });
 
     return wallet;
   }
@@ -43,9 +51,13 @@ export class WalletsService implements AbstractWalletsService {
     value: BigNumber;
     wallet: WalletEntity;
   }) {
-    wallet.increaseBalance({ value });
+    wallet.increaseBalance({
+      value,
+    });
 
-    await this.walletsRepository.saveWallet({ wallet });
+    await this.walletsRepository.saveWallet({
+      wallet,
+    });
 
     return wallet;
   }

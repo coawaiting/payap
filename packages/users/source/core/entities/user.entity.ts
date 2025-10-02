@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import type { WalletEntity } from '@payap/users/core/entities/wallet.entity.ts';
 import { UserStatus } from '@payap/users/core/enums/userStatus.enum.ts';
 
 export class UserEntity {
@@ -6,14 +7,24 @@ export class UserEntity {
 
   public readonly uuid: string;
 
+  public wallet: WalletEntity | null;
+
   public constructor() {
     this.status = UserStatus.Active;
 
     this.uuid = randomUUID();
+
+    this.wallet = null;
   }
 
   public activate() {
     this.status = UserStatus.Active;
+
+    return this;
+  }
+
+  public attachWallet({ wallet }: { wallet: WalletEntity }) {
+    this.wallet = wallet;
 
     return this;
   }
