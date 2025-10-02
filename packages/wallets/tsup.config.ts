@@ -1,34 +1,34 @@
-import { defineConfig } from 'tsup';
+import { defineConfig, type Options } from 'tsup';
+
+const baseConfig: Options = {
+  bundle: true,
+  clean: true,
+  format: ['esm'],
+  outDir: 'build/',
+  platform: 'node',
+  target: 'node22',
+  tsconfig: 'tsconfig.json',
+};
 
 export default defineConfig([
   {
-    bundle: true,
-    clean: true,
+    ...baseConfig,
     entry: ['source/main.ts'],
     external: [
       '@grpc/grpc-js',
       '@grpc/proto-loader',
       '@grpc/reflection',
     ],
-    format: ['esm'],
-    outDir: 'build/',
-    platform: 'node',
+    minify: true,
     skipNodeModulesBundle: true,
     sourcemap: true,
-    target: 'node22',
-    tsconfig: 'tsconfig.json',
   },
   {
-    bundle: true,
+    ...baseConfig,
     dts: {
       entry: 'source/index.ts',
       resolve: true,
     },
     entry: ['source/index.ts'],
-    format: ['esm'],
-    outDir: 'build/',
-    platform: 'node',
-    target: 'node22',
-    tsconfig: 'tsconfig.json',
   },
 ]);

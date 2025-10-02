@@ -10,6 +10,7 @@ export default defineConfig({
     '@grpc/reflection',
   ],
   format: ['esm'],
+  minify: true,
   outDir: 'build/',
   platform: 'node',
   skipNodeModulesBundle: true,

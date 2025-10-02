@@ -20,6 +20,13 @@ jobs:
     strategy:
       matrix:
         microservice: [transactions, users, wallets]
+  dependency-review:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/dependency-review-action@v4
 
 name: CI
 
