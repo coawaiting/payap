@@ -19,6 +19,8 @@ import {
 } from "@grpc/grpc-js";
 import { CreateWalletRequestMessage } from "../messages/createWalletRequest.message.ts";
 import { CreateWalletResponseMessage } from "../messages/createWalletResponse.message.ts";
+import { DeleteWalletRequestMessage } from "../messages/deleteWalletRequest.message.ts";
+import { DeleteWalletResponseMessage } from "../messages/deleteWalletResponse.message.ts";
 
 export const protobufPackage = "wallets.v1";
 
@@ -35,10 +37,22 @@ export const WalletsServiceService = {
       Buffer.from(CreateWalletResponseMessage.encode(value).finish()),
     responseDeserialize: (value: Buffer): CreateWalletResponseMessage => CreateWalletResponseMessage.decode(value),
   },
+  deleteWallet: {
+    path: "/wallets.v1.WalletsService/DeleteWallet",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DeleteWalletRequestMessage): Buffer =>
+      Buffer.from(DeleteWalletRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): DeleteWalletRequestMessage => DeleteWalletRequestMessage.decode(value),
+    responseSerialize: (value: DeleteWalletResponseMessage): Buffer =>
+      Buffer.from(DeleteWalletResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): DeleteWalletResponseMessage => DeleteWalletResponseMessage.decode(value),
+  },
 } as const;
 
 export interface WalletsServiceServer extends UntypedServiceImplementation {
   createWallet: handleUnaryCall<CreateWalletRequestMessage, CreateWalletResponseMessage>;
+  deleteWallet: handleUnaryCall<DeleteWalletRequestMessage, DeleteWalletResponseMessage>;
 }
 
 export interface WalletsServiceClient extends Client {
@@ -56,6 +70,21 @@ export interface WalletsServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: CreateWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  deleteWallet(
+    request: DeleteWalletRequestMessage,
+    callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  deleteWallet(
+    request: DeleteWalletRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  deleteWallet(
+    request: DeleteWalletRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
   ): ClientUnaryCall;
 }
 

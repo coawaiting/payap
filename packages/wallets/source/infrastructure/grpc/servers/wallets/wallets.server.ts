@@ -2,27 +2,30 @@ import * as path from 'node:path';
 import { Server, ServerCredentials } from '@grpc/grpc-js';
 import { load } from '@grpc/proto-loader';
 import { ReflectionService } from '@grpc/reflection';
-import { UserEntity } from '@payap/wallets/core/entities/user.entity.ts';
-import type { AbstractWalletsService } from '@payap/wallets/core/services/wallets.service.ts';
-import type { CreateWalletResponseMessage } from '@payap/wallets/generated/v1/messages/createWalletResponse.message.ts';
 import {
   type WalletsServiceServer,
   WalletsServiceService,
 } from '@payap/wallets/generated/v1/services/wallets.service.ts';
+import type { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/createWallet.endpoint.ts';
+import type { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
 
 export class WalletsServer {
+  private readonly createWalletEndpoint: CreateWalletEndpoint;
+  private readonly deleteWalletEndpoint: DeleteWalletEndpoint;
+
   private readonly server: Server;
 
-  private readonly walletsService: AbstractWalletsService;
-
   public constructor({
-    walletsService,
+    createWalletEndpoint,
+    deleteWalletEndpoint,
   }: {
-    walletsService: AbstractWalletsService;
+    createWalletEndpoint: CreateWalletEndpoint;
+    deleteWalletEndpoint: DeleteWalletEndpoint;
   }) {
-    this.server = new Server();
+    this.createWalletEndpoint = createWalletEndpoint;
+    this.deleteWalletEndpoint = deleteWalletEndpoint;
 
-    this.walletsService = walletsService;
+    this.server = new Server();
   }
 
   private async addReflection() {
@@ -47,23 +50,28 @@ export class WalletsServer {
     const implementation: WalletsServiceServer = {
       createWallet: async (call, callback) => {
         try {
-          const input = call.request;
+          const request = call.request;
 
-          const user = new UserEntity({
-            uuid: input.userUuid,
-          });
+          const response =
+            await this.createWalletEndpoint.handle({
+              createWalletRequestMessage: request,
+            });
 
-          const wallet = await this.walletsService.createWallet(
-            {
-              user,
-            },
-          );
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+      deleteWallet: async (call, callback) => {
+        try {
+          const request = call.request;
 
-          const output: CreateWalletResponseMessage = {
-            walletUuid: wallet.uuid,
-          };
+          const response =
+            await this.deleteWalletEndpoint.handle({
+              deleteWalletRequestMessage: request,
+            });
 
-          callback(null, output);
+          callback(null, response);
         } catch (error) {
           callback(error as Error, null);
         }

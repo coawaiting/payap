@@ -10,6 +10,30 @@ export class WalletsRepository
     this.wallets = new Map<string, WalletEntity>();
   }
 
+  public async deleteWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }) {
+    this.wallets.delete(wallet.uuid);
+
+    return wallet;
+  }
+
+  public async findWallet({
+    wallet: { uuid },
+  }: {
+    wallet: Partial<WalletEntity>;
+  }) {
+    let wallet: WalletEntity | null = null;
+
+    if (uuid) {
+      wallet = this.wallets.get(uuid) ?? null;
+    }
+
+    return wallet;
+  }
+
   public async saveWallet({
     wallet,
   }: {

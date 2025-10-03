@@ -9,7 +9,7 @@ export abstract class AbstractWalletsService {
     user: UserEntity;
   }): Promise<WalletEntity>;
 
-  abstract decreaseBalance({
+  abstract decreaseWalletBalance({
     value,
     wallet,
   }: {
@@ -17,11 +17,25 @@ export abstract class AbstractWalletsService {
     wallet: WalletEntity;
   }): Promise<WalletEntity>;
 
-  abstract increaseBalance({
+  abstract deleteWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }): Promise<WalletEntity>;
+
+  abstract increaseWalletBalance({
     value,
     wallet,
   }: {
     value: BigNumber;
     wallet: WalletEntity;
+  }): Promise<WalletEntity>;
+
+  abstract showWallet({
+    wallet,
+  }: {
+    wallet: {
+      uuid: string;
+    };
   }): Promise<WalletEntity>;
 }

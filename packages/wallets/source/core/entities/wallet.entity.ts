@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import type { UserEntity } from '@payap/wallets/core/entities/user.entity.ts';
-import { NotEnoughBalanceException } from '@payap/wallets/core/exceptions/notEnoughBalance.exception.ts';
+import { NotEnoughBalanceOnWalletException } from '@payap/wallets/core/exceptions/notEnoughBalanceOnWallet.exception.ts';
 import BigNumber from 'bignumber.js';
 
 export class WalletEntity {
@@ -24,7 +24,7 @@ export class WalletEntity {
     const newBalance = this.balance.minus(value);
 
     if (newBalance.isLessThan(0)) {
-      throw new NotEnoughBalanceException();
+      throw new NotEnoughBalanceOnWalletException();
     }
 
     this.balance = newBalance;

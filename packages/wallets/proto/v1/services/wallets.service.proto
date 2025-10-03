@@ -4,7 +4,10 @@ package wallets.v1;
 
 import "v1/messages/createWalletRequest.message.proto";
 import "v1/messages/createWalletResponse.message.proto";
+import "v1/messages/deleteWalletRequest.message.proto";
+import "v1/messages/deleteWalletResponse.message.proto";
 
 service WalletsService {
   rpc CreateWallet (CreateWalletRequestMessage) returns (CreateWalletResponseMessage);
+  rpc DeleteWallet (DeleteWalletRequestMessage) returns (DeleteWalletResponseMessage);
 }

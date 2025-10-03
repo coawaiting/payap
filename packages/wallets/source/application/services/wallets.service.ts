@@ -1,5 +1,6 @@
 import type { UserEntity } from '@payap/wallets/core/entities/user.entity.ts';
 import { WalletEntity } from '@payap/wallets/core/entities/wallet.entity.ts';
+import { WalletNotFoundException } from '@payap/wallets/core/exceptions/walletNotFound.exception.ts';
 import type { AbstractWalletsRepository } from '@payap/wallets/core/repositories/wallets.repository.ts';
 import type { AbstractWalletsService } from '@payap/wallets/core/services/wallets.service.ts';
 
@@ -26,7 +27,7 @@ export class WalletsService implements AbstractWalletsService {
     return wallet;
   }
 
-  public async decreaseBalance({
+  public async decreaseWalletBalance({
     value,
     wallet,
   }: {
@@ -44,7 +45,19 @@ export class WalletsService implements AbstractWalletsService {
     return wallet;
   }
 
-  public async increaseBalance({
+  public async deleteWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }) {
+    await this.walletsRepository.deleteWallet({
+      wallet,
+    });
+
+    return wallet;
+  }
+
+  public async increaseWalletBalance({
     value,
     wallet,
   }: {
@@ -58,6 +71,26 @@ export class WalletsService implements AbstractWalletsService {
     await this.walletsRepository.saveWallet({
       wallet,
     });
+
+    return wallet;
+  }
+
+  public async showWallet({
+    wallet: { uuid },
+  }: {
+    wallet: {
+      uuid: string;
+    };
+  }) {
+    const wallet = await this.walletsRepository.findWallet({
+      wallet: {
+        uuid,
+      },
+    });
+
+    if (wallet === null) {
+      throw new WalletNotFoundException();
+    }
 
     return wallet;
   }

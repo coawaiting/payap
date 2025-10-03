@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+package wallets.v1;
+
+message DeleteWalletResponseMessage {}
