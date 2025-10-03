@@ -7,23 +7,35 @@ import {
   WalletsServiceService,
 } from '@payap/wallets/generated/v1/services/wallets.service.ts';
 import type { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/createWallet.endpoint.ts';
+import type { DecreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/decreaseWalletBalance.endpoint.ts';
 import type { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
+import type { IncreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/increaseWalletBalance.endpoint.ts';
 
 export class WalletsServer {
   private readonly createWalletEndpoint: CreateWalletEndpoint;
+  private readonly decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
   private readonly deleteWalletEndpoint: DeleteWalletEndpoint;
+  private readonly increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
 
   private readonly server: Server;
 
   public constructor({
     createWalletEndpoint,
+    decreaseWalletBalanceEndpoint,
     deleteWalletEndpoint,
+    increaseWalletBalanceEndpoint,
   }: {
     createWalletEndpoint: CreateWalletEndpoint;
+    decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
     deleteWalletEndpoint: DeleteWalletEndpoint;
+    increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
   }) {
     this.createWalletEndpoint = createWalletEndpoint;
+    this.decreaseWalletBalanceEndpoint =
+      decreaseWalletBalanceEndpoint;
     this.deleteWalletEndpoint = deleteWalletEndpoint;
+    this.increaseWalletBalanceEndpoint =
+      increaseWalletBalanceEndpoint;
 
     this.server = new Server();
   }
@@ -62,6 +74,20 @@ export class WalletsServer {
           callback(error as Error, null);
         }
       },
+      decreaseWalletBalance: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response =
+            await this.decreaseWalletBalanceEndpoint.handle({
+              decreaseWalletBalanceRequestMessage: request,
+            });
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
       deleteWallet: async (call, callback) => {
         try {
           const request = call.request;
@@ -69,6 +95,20 @@ export class WalletsServer {
           const response =
             await this.deleteWalletEndpoint.handle({
               deleteWalletRequestMessage: request,
+            });
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+      increaseWalletBalance: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response =
+            await this.increaseWalletBalanceEndpoint.handle({
+              increaseWalletBalanceRequestMessage: request,
             });
 
           callback(null, response);

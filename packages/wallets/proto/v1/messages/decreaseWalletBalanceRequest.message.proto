@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package wallets.v1;
+
+message DecreaseWalletBalanceRequestMessage {
+  string value       = 1;
+  string wallet_uuid = 2;
+}

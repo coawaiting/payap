@@ -4,10 +4,16 @@ package wallets.v1;
 
 import "v1/messages/createWalletRequest.message.proto";
 import "v1/messages/createWalletResponse.message.proto";
+import "v1/messages/decreaseWalletBalanceRequest.message.proto";
+import "v1/messages/decreaseWalletBalanceResponse.message.proto";
 import "v1/messages/deleteWalletRequest.message.proto";
 import "v1/messages/deleteWalletResponse.message.proto";
+import "v1/messages/increaseWalletBalanceRequest.message.proto";
+import "v1/messages/increaseWalletBalanceResponse.message.proto";
 
 service WalletsService {
-  rpc CreateWallet (CreateWalletRequestMessage) returns (CreateWalletResponseMessage);
-  rpc DeleteWallet (DeleteWalletRequestMessage) returns (DeleteWalletResponseMessage);
+  rpc CreateWallet          (CreateWalletRequestMessage)          returns (CreateWalletResponseMessage);
+  rpc DecreaseWalletBalance (DecreaseWalletBalanceRequestMessage) returns (DecreaseWalletBalanceResponseMessage);
+  rpc DeleteWallet          (DeleteWalletRequestMessage)          returns (DeleteWalletResponseMessage);
+  rpc IncreaseWalletBalance (IncreaseWalletBalanceRequestMessage) returns (IncreaseWalletBalanceResponseMessage);
 }

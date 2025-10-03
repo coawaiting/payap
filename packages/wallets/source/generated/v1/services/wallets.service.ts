@@ -19,8 +19,12 @@ import {
 } from "@grpc/grpc-js";
 import { CreateWalletRequestMessage } from "../messages/createWalletRequest.message.ts";
 import { CreateWalletResponseMessage } from "../messages/createWalletResponse.message.ts";
+import { DecreaseWalletBalanceRequestMessage } from "../messages/decreaseWalletBalanceRequest.message.ts";
+import { DecreaseWalletBalanceResponseMessage } from "../messages/decreaseWalletBalanceResponse.message.ts";
 import { DeleteWalletRequestMessage } from "../messages/deleteWalletRequest.message.ts";
 import { DeleteWalletResponseMessage } from "../messages/deleteWalletResponse.message.ts";
+import { IncreaseWalletBalanceRequestMessage } from "../messages/increaseWalletBalanceRequest.message.ts";
+import { IncreaseWalletBalanceResponseMessage } from "../messages/increaseWalletBalanceResponse.message.ts";
 
 export const protobufPackage = "wallets.v1";
 
@@ -37,6 +41,19 @@ export const WalletsServiceService = {
       Buffer.from(CreateWalletResponseMessage.encode(value).finish()),
     responseDeserialize: (value: Buffer): CreateWalletResponseMessage => CreateWalletResponseMessage.decode(value),
   },
+  decreaseWalletBalance: {
+    path: "/wallets.v1.WalletsService/DecreaseWalletBalance",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: DecreaseWalletBalanceRequestMessage): Buffer =>
+      Buffer.from(DecreaseWalletBalanceRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): DecreaseWalletBalanceRequestMessage =>
+      DecreaseWalletBalanceRequestMessage.decode(value),
+    responseSerialize: (value: DecreaseWalletBalanceResponseMessage): Buffer =>
+      Buffer.from(DecreaseWalletBalanceResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): DecreaseWalletBalanceResponseMessage =>
+      DecreaseWalletBalanceResponseMessage.decode(value),
+  },
   deleteWallet: {
     path: "/wallets.v1.WalletsService/DeleteWallet",
     requestStream: false,
@@ -48,11 +65,26 @@ export const WalletsServiceService = {
       Buffer.from(DeleteWalletResponseMessage.encode(value).finish()),
     responseDeserialize: (value: Buffer): DeleteWalletResponseMessage => DeleteWalletResponseMessage.decode(value),
   },
+  increaseWalletBalance: {
+    path: "/wallets.v1.WalletsService/IncreaseWalletBalance",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: IncreaseWalletBalanceRequestMessage): Buffer =>
+      Buffer.from(IncreaseWalletBalanceRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): IncreaseWalletBalanceRequestMessage =>
+      IncreaseWalletBalanceRequestMessage.decode(value),
+    responseSerialize: (value: IncreaseWalletBalanceResponseMessage): Buffer =>
+      Buffer.from(IncreaseWalletBalanceResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): IncreaseWalletBalanceResponseMessage =>
+      IncreaseWalletBalanceResponseMessage.decode(value),
+  },
 } as const;
 
 export interface WalletsServiceServer extends UntypedServiceImplementation {
   createWallet: handleUnaryCall<CreateWalletRequestMessage, CreateWalletResponseMessage>;
+  decreaseWalletBalance: handleUnaryCall<DecreaseWalletBalanceRequestMessage, DecreaseWalletBalanceResponseMessage>;
   deleteWallet: handleUnaryCall<DeleteWalletRequestMessage, DeleteWalletResponseMessage>;
+  increaseWalletBalance: handleUnaryCall<IncreaseWalletBalanceRequestMessage, IncreaseWalletBalanceResponseMessage>;
 }
 
 export interface WalletsServiceClient extends Client {
@@ -71,6 +103,21 @@ export interface WalletsServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: CreateWalletResponseMessage) => void,
   ): ClientUnaryCall;
+  decreaseWalletBalance(
+    request: DecreaseWalletBalanceRequestMessage,
+    callback: (error: ServiceError | null, response: DecreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  decreaseWalletBalance(
+    request: DecreaseWalletBalanceRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: DecreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  decreaseWalletBalance(
+    request: DecreaseWalletBalanceRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: DecreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
   deleteWallet(
     request: DeleteWalletRequestMessage,
     callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
@@ -85,6 +132,21 @@ export interface WalletsServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  increaseWalletBalance(
+    request: IncreaseWalletBalanceRequestMessage,
+    callback: (error: ServiceError | null, response: IncreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  increaseWalletBalance(
+    request: IncreaseWalletBalanceRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: IncreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  increaseWalletBalance(
+    request: IncreaseWalletBalanceRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: IncreaseWalletBalanceResponseMessage) => void,
   ): ClientUnaryCall;
 }
 
