@@ -75,6 +75,34 @@ export class WalletsService implements AbstractWalletsService {
     return wallet;
   }
 
+  public async reassignWalletBalance({
+    fromWallet,
+    toWallet,
+    value,
+  }: {
+    fromWallet: WalletEntity;
+    toWallet: WalletEntity;
+    value: BigNumber;
+  }) {
+    fromWallet.reassignBalance({
+      toWallet,
+      value,
+    });
+
+    await this.walletsRepository.saveWallet({
+      wallet: fromWallet,
+    });
+
+    await this.walletsRepository.saveWallet({
+      wallet: toWallet,
+    });
+
+    return {
+      fromWallet,
+      toWallet,
+    };
+  }
+
   public async showWallet({
     wallet: { uuid },
   }: {

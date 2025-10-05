@@ -3,6 +3,7 @@
 jobs:
   build:
     name: build / ${{ matrix.microservice }}
+    needs: dependency-review
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -10,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           cache: npm
-          node-version: 22
+          node-version: 20
 
       - name: Install dependencies
         run: npm clean-install
@@ -21,7 +22,7 @@ jobs:
       matrix:
         microservice: [transactions, users, wallets]
   dependency-review:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -30,6 +31,25 @@ jobs:
         with:
           base-ref: ${{ github.event.before }}
           head-ref: ${{ github.sha }}
+  test:
+    name: test / ${{ matrix.microservice }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          cache: npm
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm clean-install
+
+      - name: Test ${{ matrix.microservice }} microservice
+        run: npx lerna run test:integration --scope @payap/${{ matrix.microservice }}
+    strategy:
+      matrix:
+        microservice: [wallets]
 
 name: CI
 

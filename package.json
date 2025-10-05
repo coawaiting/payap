@@ -5,7 +5,8 @@
     "@commitlint/config-conventional": "^20.0.0",
     "husky": "^9.1.7",
     "lerna": "^9.0.0",
-    "lint-staged": "^16.2.1"
+    "lint-staged": "^16.2.1",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "name": "payap",
   "private": true,

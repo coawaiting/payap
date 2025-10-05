@@ -25,6 +25,10 @@ import { DeleteWalletRequestMessage } from "../messages/deleteWalletRequest.mess
 import { DeleteWalletResponseMessage } from "../messages/deleteWalletResponse.message.ts";
 import { IncreaseWalletBalanceRequestMessage } from "../messages/increaseWalletBalanceRequest.message.ts";
 import { IncreaseWalletBalanceResponseMessage } from "../messages/increaseWalletBalanceResponse.message.ts";
+import { ReassignWalletBalanceRequestMessage } from "../messages/reassignWalletBalanceRequest.message.ts";
+import { ReassignWalletBalanceResponseMessage } from "../messages/reassignWalletBalanceResponse.message.ts";
+import { ShowWalletRequestMessage } from "../messages/showWalletRequest.message.ts";
+import { ShowWalletResponseMessage } from "../messages/showWalletResponse.message.ts";
 
 export const protobufPackage = "wallets.v1";
 
@@ -78,6 +82,30 @@ export const WalletsServiceService = {
     responseDeserialize: (value: Buffer): IncreaseWalletBalanceResponseMessage =>
       IncreaseWalletBalanceResponseMessage.decode(value),
   },
+  reassignWalletBalance: {
+    path: "/wallets.v1.WalletsService/ReassignWalletBalance",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: ReassignWalletBalanceRequestMessage): Buffer =>
+      Buffer.from(ReassignWalletBalanceRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): ReassignWalletBalanceRequestMessage =>
+      ReassignWalletBalanceRequestMessage.decode(value),
+    responseSerialize: (value: ReassignWalletBalanceResponseMessage): Buffer =>
+      Buffer.from(ReassignWalletBalanceResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): ReassignWalletBalanceResponseMessage =>
+      ReassignWalletBalanceResponseMessage.decode(value),
+  },
+  showWallet: {
+    path: "/wallets.v1.WalletsService/ShowWallet",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: ShowWalletRequestMessage): Buffer =>
+      Buffer.from(ShowWalletRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): ShowWalletRequestMessage => ShowWalletRequestMessage.decode(value),
+    responseSerialize: (value: ShowWalletResponseMessage): Buffer =>
+      Buffer.from(ShowWalletResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): ShowWalletResponseMessage => ShowWalletResponseMessage.decode(value),
+  },
 } as const;
 
 export interface WalletsServiceServer extends UntypedServiceImplementation {
@@ -85,6 +113,8 @@ export interface WalletsServiceServer extends UntypedServiceImplementation {
   decreaseWalletBalance: handleUnaryCall<DecreaseWalletBalanceRequestMessage, DecreaseWalletBalanceResponseMessage>;
   deleteWallet: handleUnaryCall<DeleteWalletRequestMessage, DeleteWalletResponseMessage>;
   increaseWalletBalance: handleUnaryCall<IncreaseWalletBalanceRequestMessage, IncreaseWalletBalanceResponseMessage>;
+  reassignWalletBalance: handleUnaryCall<ReassignWalletBalanceRequestMessage, ReassignWalletBalanceResponseMessage>;
+  showWallet: handleUnaryCall<ShowWalletRequestMessage, ShowWalletResponseMessage>;
 }
 
 export interface WalletsServiceClient extends Client {
@@ -147,6 +177,36 @@ export interface WalletsServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: IncreaseWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  reassignWalletBalance(
+    request: ReassignWalletBalanceRequestMessage,
+    callback: (error: ServiceError | null, response: ReassignWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  reassignWalletBalance(
+    request: ReassignWalletBalanceRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ReassignWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  reassignWalletBalance(
+    request: ReassignWalletBalanceRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ReassignWalletBalanceResponseMessage) => void,
+  ): ClientUnaryCall;
+  showWallet(
+    request: ShowWalletRequestMessage,
+    callback: (error: ServiceError | null, response: ShowWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  showWallet(
+    request: ShowWalletRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ShowWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  showWallet(
+    request: ShowWalletRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ShowWalletResponseMessage) => void,
   ): ClientUnaryCall;
 }
 

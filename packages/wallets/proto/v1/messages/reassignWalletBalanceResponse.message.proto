@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package wallets.v1;
+
+message ReassignWalletBalanceResponseMessage {
+  string from_wallet_balance = 1;
+  string from_wallet_uuid    = 2;
+  string to_wallet_balance   = 3;
+  string to_wallet_uuid      = 4;
+}

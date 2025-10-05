@@ -31,6 +31,19 @@ export abstract class AbstractWalletsService {
     wallet: WalletEntity;
   }): Promise<WalletEntity>;
 
+  abstract reassignWalletBalance({
+    fromWallet,
+    toWallet,
+    value,
+  }: {
+    fromWallet: WalletEntity;
+    toWallet: WalletEntity;
+    value: BigNumber;
+  }): Promise<{
+    fromWallet: WalletEntity;
+    toWallet: WalletEntity;
+  }>;
+
   abstract showWallet({
     wallet,
   }: {

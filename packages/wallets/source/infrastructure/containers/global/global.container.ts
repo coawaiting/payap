@@ -4,6 +4,8 @@ import { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers
 import { DecreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/decreaseWalletBalance.endpoint.ts';
 import { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
 import { IncreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/increaseWalletBalance.endpoint.ts';
+import { ReassignWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/reassignWalletBalance.endpoint.ts';
+import { ShowWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/showWallet.endpoint.ts';
 import { WalletsServer } from '@payap/wallets/infrastructure/grpc/servers/wallets/wallets.server.ts';
 import { WalletsRepository } from '@payap/wallets/infrastructure/repositories/wallets.repository.ts';
 import { asClass, createContainer } from 'awilix';
@@ -24,6 +26,10 @@ globalContainer.register({
   increaseWalletBalanceEndpoint: asClass(
     IncreaseWalletBalanceEndpoint,
   ).singleton(),
+  reassignWalletBalanceEndpoint: asClass(
+    ReassignWalletBalanceEndpoint,
+  ).singleton(),
+  showWalletEndpoint: asClass(ShowWalletEndpoint).singleton(),
 
   walletsRepository: asClass(WalletsRepository).singleton(),
 

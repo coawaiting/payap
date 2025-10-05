@@ -4,6 +4,8 @@ import type { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/se
 import type { DecreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/decreaseWalletBalance.endpoint.ts';
 import type { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
 import type { IncreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/increaseWalletBalance.endpoint.ts';
+import type { ReassignWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/reassignWalletBalance.endpoint.ts';
+import type { ShowWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/showWallet.endpoint.ts';
 import type { WalletsServer } from '@payap/wallets/infrastructure/grpc/servers/wallets/wallets.server.ts';
 
 export type Cradle = {
@@ -11,6 +13,8 @@ export type Cradle = {
   decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
   deleteWalletEndpoint: DeleteWalletEndpoint;
   increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
+  reassignWalletBalanceEndpoint: ReassignWalletBalanceEndpoint;
+  showWalletEndpoint: ShowWalletEndpoint;
 
   walletsRepository: AbstractWalletsRepository;
 

@@ -7,6 +7,7 @@ export class WalletEntity {
   private balance: BigNumber;
 
   public readonly user: UserEntity;
+
   public readonly uuid: string;
 
   public constructor({
@@ -17,6 +18,7 @@ export class WalletEntity {
     this.balance = new BigNumber(0);
 
     this.user = user;
+
     this.uuid = randomUUID();
   }
 
@@ -34,6 +36,28 @@ export class WalletEntity {
 
   public increaseBalance({ value }: { value: BigNumber }) {
     this.balance = this.balance.plus(value);
+
+    return this;
+  }
+
+  public reassignBalance({
+    toWallet,
+    value,
+  }: {
+    toWallet: WalletEntity;
+    value: BigNumber;
+  }) {
+    const newBalance = this.balance.minus(value);
+
+    if (newBalance.isLessThan(0)) {
+      throw new NotEnoughBalanceOnWalletException();
+    }
+
+    this.balance = newBalance;
+
+    toWallet.increaseBalance({
+      value,
+    });
 
     return this;
   }

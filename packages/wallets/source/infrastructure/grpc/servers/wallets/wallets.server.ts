@@ -10,12 +10,16 @@ import type { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/se
 import type { DecreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/decreaseWalletBalance.endpoint.ts';
 import type { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
 import type { IncreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/increaseWalletBalance.endpoint.ts';
+import type { ReassignWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/reassignWalletBalance.endpoint.ts';
+import type { ShowWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/showWallet.endpoint.ts';
 
 export class WalletsServer {
   private readonly createWalletEndpoint: CreateWalletEndpoint;
   private readonly decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
   private readonly deleteWalletEndpoint: DeleteWalletEndpoint;
   private readonly increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
+  private readonly reassignWalletBalanceEndpoint: ReassignWalletBalanceEndpoint;
+  private readonly showWalletEndpoint: ShowWalletEndpoint;
 
   private readonly server: Server;
 
@@ -24,11 +28,15 @@ export class WalletsServer {
     decreaseWalletBalanceEndpoint,
     deleteWalletEndpoint,
     increaseWalletBalanceEndpoint,
+    reassignWalletBalanceEndpoint,
+    showWalletEndpoint,
   }: {
     createWalletEndpoint: CreateWalletEndpoint;
     decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
     deleteWalletEndpoint: DeleteWalletEndpoint;
     increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
+    reassignWalletBalanceEndpoint: ReassignWalletBalanceEndpoint;
+    showWalletEndpoint: ShowWalletEndpoint;
   }) {
     this.createWalletEndpoint = createWalletEndpoint;
     this.decreaseWalletBalanceEndpoint =
@@ -36,6 +44,9 @@ export class WalletsServer {
     this.deleteWalletEndpoint = deleteWalletEndpoint;
     this.increaseWalletBalanceEndpoint =
       increaseWalletBalanceEndpoint;
+    this.reassignWalletBalanceEndpoint =
+      reassignWalletBalanceEndpoint;
+    this.showWalletEndpoint = showWalletEndpoint;
 
     this.server = new Server();
   }
@@ -116,6 +127,35 @@ export class WalletsServer {
           callback(error as Error, null);
         }
       },
+      reassignWalletBalance: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response =
+            await this.reassignWalletBalanceEndpoint.handle({
+              reassignWalletBalanceRequestMessage: request,
+            });
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+      showWallet: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response = await this.showWalletEndpoint.handle(
+            {
+              showWalletRequestMessage: request,
+            },
+          );
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
     };
 
     this.server.addService(
@@ -124,8 +164,15 @@ export class WalletsServer {
     );
   }
 
-  public async initialize() {
-    await this.addReflection();
+  public async initialize({
+    enableReflection,
+  }: {
+    enableReflection: boolean;
+  }) {
+    if (enableReflection) {
+      await this.addReflection();
+    }
+
     await this.addServices();
   }
 
