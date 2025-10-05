@@ -1,0 +1,13 @@
+---
+
+test_wallets:
+  artifacts:
+    paths:
+      - test-results/
+    when: always
+  image: node:${NODE_VERSION}
+  script:
+    - npm clean-install
+
+    - npx lerna run test:integration --scope @payap/wallets
+  stage: test

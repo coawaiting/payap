@@ -1,0 +1,19 @@
+---
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+include:
+  - local: .gitlab/build.yml
+  - local: .gitlab/dependency-review.yml
+  - local: .gitlab/test.yml
+
+stages:
+  - test
+  - dependency-review
+  - build
+
+variables:
+  NODE_VERSION: '20'

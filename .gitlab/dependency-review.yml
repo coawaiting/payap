@@ -1,0 +1,10 @@
+---
+
+dependency_review:
+  image: node:${NODE_VERSION}
+  needs: vscode-yaml-sort.array.1
+  script:
+    - npm clean-install
+
+    - npx @github/dependency-review-action@latest --base $CI_COMMIT_BEFORE_SHA --head $CI_COMMIT_SHA
+  stage: dependency-review

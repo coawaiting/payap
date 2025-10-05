@@ -1,0 +1,34 @@
+---
+
+.build_template:
+  image: node:${NODE_VERSION}
+  needs: ["dependency_review"]
+  script: &ref_0
+    - npm clean-install
+
+    - npx lerna run build --scope @payap/${MICROSERVICE}
+  stage: build
+
+build_transactions:
+  image: node:${NODE_VERSION}
+  needs: ["test_wallets"]
+  script: *ref_0
+  stage: build
+  variables:
+    MICROSERVICE: transactions
+
+build_users:
+  image: node:${NODE_VERSION}
+  needs: vscode-yaml-sort.array.1
+  script: *ref_0
+  stage: build
+  variables:
+    MICROSERVICE: users
+
+build_wallets:
+  image: node:${NODE_VERSION}
+  needs: vscode-yaml-sort.array.1
+  script: *ref_0
+  stage: build
+  variables:
+    MICROSERVICE: wallets
