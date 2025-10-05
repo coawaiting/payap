@@ -1,0 +1,53 @@
+---
+
+services:
+  limits-database:
+    container_name: postgres-limits
+    environment:
+      POSTGRES_DB: limits_database
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: limits_database_user
+    image: postgres:17
+    ports:
+      - '5433:5432'
+    volumes:
+      - limits-database-data:/var/lib/postgresql/data/:rw
+  transactions-database:
+    container_name: postgres-transactions
+    environment:
+      POSTGRES_DB: transactions_database
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: transactions_database_user
+    image: postgres:17
+    ports:
+      - '5434:5432'
+    volumes:
+      - transactions-database-data:/var/lib/postgresql/data/:rw
+  users-database:
+    container_name: postgres-users
+    environment:
+      POSTGRES_DB: users_database
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: users_database_user
+    image: postgres:17
+    ports:
+      - '5435:5432'
+    volumes:
+      - users-database-data:/var/lib/postgresql/data/:rw
+  wallets-database:
+    container_name: postgres-wallets
+    environment:
+      POSTGRES_DB: wallets_database
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: wallets_database_user
+    image: postgres:17
+    ports:
+      - '5436:5432'
+    volumes:
+      - wallets-database-data:/var/lib/postgresql/data/:rw
+
+volumes:
+  limits-database-data: {}
+  transactions-database-data: {}
+  users-database-data: {}
+  wallets-database-data: {}

@@ -31,6 +31,7 @@ jobs:
         with:
           base-ref: ${{ github.event.before }}
           head-ref: ${{ github.sha }}
+          warn-on-openssf-scorecard-level: 2
   test:
     name: test / ${{ matrix.microservice }}
     runs-on: ubuntu-latest
