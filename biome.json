@@ -16,6 +16,7 @@
       "!**/generated/*",
       "!.github/",
       "!.husky/",
+      "!docker/",
       "!node_modules/"
     ]
   },
