@@ -26,6 +26,7 @@ export class ShowWalletEndpoint {
 
     const response: ShowWalletResponseMessage = {
       balance: wallet.showBalance().toString(),
+      isFrozen: wallet.isActive(),
       userUuid: wallet.user.uuid,
       walletUuid: wallet.uuid,
     };

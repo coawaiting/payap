@@ -23,12 +23,16 @@ import { DecreaseWalletBalanceRequestMessage } from "../messages/decreaseWalletB
 import { DecreaseWalletBalanceResponseMessage } from "../messages/decreaseWalletBalanceResponse.message.ts";
 import { DeleteWalletRequestMessage } from "../messages/deleteWalletRequest.message.ts";
 import { DeleteWalletResponseMessage } from "../messages/deleteWalletResponse.message.ts";
+import { FreezeWalletRequestMessage } from "../messages/freezeWalletRequest.message.ts";
+import { FreezeWalletResponseMessage } from "../messages/freezeWalletResponse.message.ts";
 import { IncreaseWalletBalanceRequestMessage } from "../messages/increaseWalletBalanceRequest.message.ts";
 import { IncreaseWalletBalanceResponseMessage } from "../messages/increaseWalletBalanceResponse.message.ts";
 import { ReassignWalletBalanceRequestMessage } from "../messages/reassignWalletBalanceRequest.message.ts";
 import { ReassignWalletBalanceResponseMessage } from "../messages/reassignWalletBalanceResponse.message.ts";
 import { ShowWalletRequestMessage } from "../messages/showWalletRequest.message.ts";
 import { ShowWalletResponseMessage } from "../messages/showWalletResponse.message.ts";
+import { UnfreezeWalletRequestMessage } from "../messages/unfreezeWalletRequest.message.ts";
+import { UnfreezeWalletResponseMessage } from "../messages/unfreezeWalletResponse.message.ts";
 
 export const protobufPackage = "wallets.v1";
 
@@ -69,6 +73,17 @@ export const WalletsServiceService = {
       Buffer.from(DeleteWalletResponseMessage.encode(value).finish()),
     responseDeserialize: (value: Buffer): DeleteWalletResponseMessage => DeleteWalletResponseMessage.decode(value),
   },
+  freezeWallet: {
+    path: "/wallets.v1.WalletsService/FreezeWallet",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: FreezeWalletRequestMessage): Buffer =>
+      Buffer.from(FreezeWalletRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): FreezeWalletRequestMessage => FreezeWalletRequestMessage.decode(value),
+    responseSerialize: (value: FreezeWalletResponseMessage): Buffer =>
+      Buffer.from(FreezeWalletResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): FreezeWalletResponseMessage => FreezeWalletResponseMessage.decode(value),
+  },
   increaseWalletBalance: {
     path: "/wallets.v1.WalletsService/IncreaseWalletBalance",
     requestStream: false,
@@ -106,15 +121,28 @@ export const WalletsServiceService = {
       Buffer.from(ShowWalletResponseMessage.encode(value).finish()),
     responseDeserialize: (value: Buffer): ShowWalletResponseMessage => ShowWalletResponseMessage.decode(value),
   },
+  unfreezeWallet: {
+    path: "/wallets.v1.WalletsService/UnfreezeWallet",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: UnfreezeWalletRequestMessage): Buffer =>
+      Buffer.from(UnfreezeWalletRequestMessage.encode(value).finish()),
+    requestDeserialize: (value: Buffer): UnfreezeWalletRequestMessage => UnfreezeWalletRequestMessage.decode(value),
+    responseSerialize: (value: UnfreezeWalletResponseMessage): Buffer =>
+      Buffer.from(UnfreezeWalletResponseMessage.encode(value).finish()),
+    responseDeserialize: (value: Buffer): UnfreezeWalletResponseMessage => UnfreezeWalletResponseMessage.decode(value),
+  },
 } as const;
 
 export interface WalletsServiceServer extends UntypedServiceImplementation {
   createWallet: handleUnaryCall<CreateWalletRequestMessage, CreateWalletResponseMessage>;
   decreaseWalletBalance: handleUnaryCall<DecreaseWalletBalanceRequestMessage, DecreaseWalletBalanceResponseMessage>;
   deleteWallet: handleUnaryCall<DeleteWalletRequestMessage, DeleteWalletResponseMessage>;
+  freezeWallet: handleUnaryCall<FreezeWalletRequestMessage, FreezeWalletResponseMessage>;
   increaseWalletBalance: handleUnaryCall<IncreaseWalletBalanceRequestMessage, IncreaseWalletBalanceResponseMessage>;
   reassignWalletBalance: handleUnaryCall<ReassignWalletBalanceRequestMessage, ReassignWalletBalanceResponseMessage>;
   showWallet: handleUnaryCall<ShowWalletRequestMessage, ShowWalletResponseMessage>;
+  unfreezeWallet: handleUnaryCall<UnfreezeWalletRequestMessage, UnfreezeWalletResponseMessage>;
 }
 
 export interface WalletsServiceClient extends Client {
@@ -163,6 +191,21 @@ export interface WalletsServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: DeleteWalletResponseMessage) => void,
   ): ClientUnaryCall;
+  freezeWallet(
+    request: FreezeWalletRequestMessage,
+    callback: (error: ServiceError | null, response: FreezeWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  freezeWallet(
+    request: FreezeWalletRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: FreezeWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  freezeWallet(
+    request: FreezeWalletRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: FreezeWalletResponseMessage) => void,
+  ): ClientUnaryCall;
   increaseWalletBalance(
     request: IncreaseWalletBalanceRequestMessage,
     callback: (error: ServiceError | null, response: IncreaseWalletBalanceResponseMessage) => void,
@@ -207,6 +250,21 @@ export interface WalletsServiceClient extends Client {
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: ShowWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  unfreezeWallet(
+    request: UnfreezeWalletRequestMessage,
+    callback: (error: ServiceError | null, response: UnfreezeWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  unfreezeWallet(
+    request: UnfreezeWalletRequestMessage,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: UnfreezeWalletResponseMessage) => void,
+  ): ClientUnaryCall;
+  unfreezeWallet(
+    request: UnfreezeWalletRequestMessage,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: UnfreezeWalletResponseMessage) => void,
   ): ClientUnaryCall;
 }
 

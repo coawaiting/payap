@@ -8,18 +8,24 @@ import "v1/messages/decreaseWalletBalanceRequest.message.proto";
 import "v1/messages/decreaseWalletBalanceResponse.message.proto";
 import "v1/messages/deleteWalletRequest.message.proto";
 import "v1/messages/deleteWalletResponse.message.proto";
+import "v1/messages/freezeWalletRequest.message.proto";
+import "v1/messages/freezeWalletResponse.message.proto";
 import "v1/messages/increaseWalletBalanceRequest.message.proto";
 import "v1/messages/increaseWalletBalanceResponse.message.proto";
 import "v1/messages/showWalletRequest.message.proto";
 import "v1/messages/showWalletResponse.message.proto";
 import "v1/messages/reassignWalletBalanceRequest.message.proto";
 import "v1/messages/reassignWalletBalanceResponse.message.proto";
+import "v1/messages/unfreezeWalletRequest.message.proto";
+import "v1/messages/unfreezeWalletResponse.message.proto";
 
 service WalletsService {
   rpc CreateWallet          (CreateWalletRequestMessage)          returns (CreateWalletResponseMessage);
   rpc DecreaseWalletBalance (DecreaseWalletBalanceRequestMessage) returns (DecreaseWalletBalanceResponseMessage);
   rpc DeleteWallet          (DeleteWalletRequestMessage)          returns (DeleteWalletResponseMessage);
+  rpc FreezeWallet          (FreezeWalletRequestMessage)          returns (FreezeWalletResponseMessage);
   rpc IncreaseWalletBalance (IncreaseWalletBalanceRequestMessage) returns (IncreaseWalletBalanceResponseMessage);
   rpc ReassignWalletBalance (ReassignWalletBalanceRequestMessage) returns (ReassignWalletBalanceResponseMessage);
   rpc ShowWallet            (ShowWalletRequestMessage)            returns (ShowWalletResponseMessage);
+  rpc UnfreezeWallet        (UnfreezeWalletRequestMessage)        returns (UnfreezeWalletResponseMessage);
 }

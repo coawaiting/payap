@@ -11,12 +11,13 @@ export const protobufPackage = "wallets.v1";
 
 export interface ShowWalletResponseMessage {
   balance: string;
+  isFrozen: boolean;
   userUuid: string;
   walletUuid: string;
 }
 
 function createBaseShowWalletResponseMessage(): ShowWalletResponseMessage {
-  return { balance: "", userUuid: "", walletUuid: "" };
+  return { balance: "", isFrozen: false, userUuid: "", walletUuid: "" };
 }
 
 export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = {
@@ -24,11 +25,14 @@ export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = 
     if (message.balance !== "") {
       writer.uint32(10).string(message.balance);
     }
+    if (message.isFrozen !== false) {
+      writer.uint32(16).bool(message.isFrozen);
+    }
     if (message.userUuid !== "") {
-      writer.uint32(18).string(message.userUuid);
+      writer.uint32(26).string(message.userUuid);
     }
     if (message.walletUuid !== "") {
-      writer.uint32(26).string(message.walletUuid);
+      writer.uint32(34).string(message.walletUuid);
     }
     return writer;
   },
@@ -49,15 +53,23 @@ export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = 
           continue;
         }
         case 2: {
-          if (tag !== 18) {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.isFrozen = reader.bool();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
             break;
           }
 
           message.userUuid = reader.string();
           continue;
         }
-        case 3: {
-          if (tag !== 26) {
+        case 4: {
+          if (tag !== 34) {
             break;
           }
 
@@ -76,6 +88,7 @@ export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = 
   fromJSON(object: any): ShowWalletResponseMessage {
     return {
       balance: isSet(object.balance) ? globalThis.String(object.balance) : "",
+      isFrozen: isSet(object.isFrozen) ? globalThis.Boolean(object.isFrozen) : false,
       userUuid: isSet(object.userUuid) ? globalThis.String(object.userUuid) : "",
       walletUuid: isSet(object.walletUuid) ? globalThis.String(object.walletUuid) : "",
     };
@@ -85,6 +98,9 @@ export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = 
     const obj: any = {};
     if (message.balance !== "") {
       obj.balance = message.balance;
+    }
+    if (message.isFrozen !== false) {
+      obj.isFrozen = message.isFrozen;
     }
     if (message.userUuid !== "") {
       obj.userUuid = message.userUuid;
@@ -101,6 +117,7 @@ export const ShowWalletResponseMessage: MessageFns<ShowWalletResponseMessage> = 
   fromPartial<I extends Exact<DeepPartial<ShowWalletResponseMessage>, I>>(object: I): ShowWalletResponseMessage {
     const message = createBaseShowWalletResponseMessage();
     message.balance = object.balance ?? "";
+    message.isFrozen = object.isFrozen ?? false;
     message.userUuid = object.userUuid ?? "";
     message.walletUuid = object.walletUuid ?? "";
     return message;

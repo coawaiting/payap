@@ -3,7 +3,8 @@ syntax = "proto3";
 package wallets.v1;
 
 message ShowWalletResponseMessage {
-  string balance     = 1;
-  string user_uuid   = 2;
-  string wallet_uuid = 3;
+  string  balance     = 1;
+  bool    is_frozen   = 2;
+  string  user_uuid   = 3;
+  string  wallet_uuid = 4;
 }

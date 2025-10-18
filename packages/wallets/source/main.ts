@@ -4,7 +4,9 @@ const start = async () => {
   const walletsServer =
     globalContainer.resolve('walletsServer');
 
-  await walletsServer.initialize();
+  await walletsServer.initialize({
+    enableReflection: true,
+  });
 
   await walletsServer.run();
 };

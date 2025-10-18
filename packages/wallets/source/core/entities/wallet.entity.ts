@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 
 export class WalletEntity {
   private balance: BigNumber;
+  private isFrozen: boolean;
 
   public readonly user: UserEntity;
 
@@ -16,6 +17,7 @@ export class WalletEntity {
     user: UserEntity;
   }) {
     this.balance = new BigNumber(0);
+    this.isFrozen = false;
 
     this.user = user;
 
@@ -34,10 +36,18 @@ export class WalletEntity {
     return this;
   }
 
+  public freeze() {
+    this.isFrozen = true;
+  }
+
   public increaseBalance({ value }: { value: BigNumber }) {
     this.balance = this.balance.plus(value);
 
     return this;
+  }
+
+  public isActive() {
+    return this.isFrozen;
   }
 
   public reassignBalance({
@@ -64,5 +74,9 @@ export class WalletEntity {
 
   public showBalance() {
     return this.balance;
+  }
+
+  public unfreeze() {
+    this.isFrozen = false;
   }
 }

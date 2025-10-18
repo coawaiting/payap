@@ -9,17 +9,21 @@ import {
 import type { CreateWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/createWallet.endpoint.ts';
 import type { DecreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/decreaseWalletBalance.endpoint.ts';
 import type { DeleteWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/deleteWallet.endpoint.ts';
+import type { FreezeWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/freezeWallet.endpoint.ts';
 import type { IncreaseWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/increaseWalletBalance.endpoint.ts';
 import type { ReassignWalletBalanceEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/reassignWalletBalance.endpoint.ts';
 import type { ShowWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/showWallet.endpoint.ts';
+import type { UnfreezeWalletEndpoint } from '@payap/wallets/infrastructure/grpc/servers/wallets/endpoints/unfreezeWallet.endpoint.ts';
 
 export class WalletsServer {
   private readonly createWalletEndpoint: CreateWalletEndpoint;
   private readonly decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
   private readonly deleteWalletEndpoint: DeleteWalletEndpoint;
+  private readonly freezeWalletEndpoint: FreezeWalletEndpoint;
   private readonly increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
   private readonly reassignWalletBalanceEndpoint: ReassignWalletBalanceEndpoint;
   private readonly showWalletEndpoint: ShowWalletEndpoint;
+  private readonly unfreezeWalletEndpoint: UnfreezeWalletEndpoint;
 
   private readonly server: Server;
 
@@ -27,26 +31,32 @@ export class WalletsServer {
     createWalletEndpoint,
     decreaseWalletBalanceEndpoint,
     deleteWalletEndpoint,
+    freezeWalletEndpoint,
     increaseWalletBalanceEndpoint,
     reassignWalletBalanceEndpoint,
     showWalletEndpoint,
+    unfreezeWalletEndpoint,
   }: {
     createWalletEndpoint: CreateWalletEndpoint;
     decreaseWalletBalanceEndpoint: DecreaseWalletBalanceEndpoint;
     deleteWalletEndpoint: DeleteWalletEndpoint;
+    freezeWalletEndpoint: FreezeWalletEndpoint;
     increaseWalletBalanceEndpoint: IncreaseWalletBalanceEndpoint;
     reassignWalletBalanceEndpoint: ReassignWalletBalanceEndpoint;
     showWalletEndpoint: ShowWalletEndpoint;
+    unfreezeWalletEndpoint: UnfreezeWalletEndpoint;
   }) {
     this.createWalletEndpoint = createWalletEndpoint;
     this.decreaseWalletBalanceEndpoint =
       decreaseWalletBalanceEndpoint;
     this.deleteWalletEndpoint = deleteWalletEndpoint;
+    this.freezeWalletEndpoint = freezeWalletEndpoint;
     this.increaseWalletBalanceEndpoint =
       increaseWalletBalanceEndpoint;
     this.reassignWalletBalanceEndpoint =
       reassignWalletBalanceEndpoint;
     this.showWalletEndpoint = showWalletEndpoint;
+    this.unfreezeWalletEndpoint = unfreezeWalletEndpoint;
 
     this.server = new Server();
   }
@@ -113,6 +123,20 @@ export class WalletsServer {
           callback(error as Error, null);
         }
       },
+      freezeWallet: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response =
+            await this.freezeWalletEndpoint.handle({
+              freezeWalletRequestMessage: request,
+            });
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
       increaseWalletBalance: async (call, callback) => {
         try {
           const request = call.request;
@@ -150,6 +174,20 @@ export class WalletsServer {
               showWalletRequestMessage: request,
             },
           );
+
+          callback(null, response);
+        } catch (error) {
+          callback(error as Error, null);
+        }
+      },
+      unfreezeWallet: async (call, callback) => {
+        try {
+          const request = call.request;
+
+          const response =
+            await this.unfreezeWalletEndpoint.handle({
+              unfreezeWalletRequestMessage: request,
+            });
 
           callback(null, response);
         } catch (error) {

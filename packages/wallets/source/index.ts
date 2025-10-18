@@ -4,8 +4,12 @@ export { DecreaseWalletBalanceRequestMessage } from '@payap/wallets/generated/v1
 export { DecreaseWalletBalanceResponseMessage } from '@payap/wallets/generated/v1/messages/decreaseWalletBalanceResponse.message.ts';
 export { DeleteWalletRequestMessage } from '@payap/wallets/generated/v1/messages/deleteWalletRequest.message.ts';
 export { DeleteWalletResponseMessage } from '@payap/wallets/generated/v1/messages/deleteWalletResponse.message.ts';
+export { FreezeWalletRequestMessage } from '@payap/wallets/generated/v1/messages/freezeWalletRequest.message.ts';
+export { FreezeWalletResponseMessage } from '@payap/wallets/generated/v1/messages/freezeWalletResponse.message.ts';
 export { IncreaseWalletBalanceRequestMessage } from '@payap/wallets/generated/v1/messages/increaseWalletBalanceRequest.message.ts';
 export { IncreaseWalletBalanceResponseMessage } from '@payap/wallets/generated/v1/messages/increaseWalletBalanceResponse.message.ts';
 export { ReassignWalletBalanceRequestMessage } from '@payap/wallets/generated/v1/messages/reassignWalletBalanceRequest.message.ts';
 export { ReassignWalletBalanceResponseMessage } from '@payap/wallets/generated/v1/messages/reassignWalletBalanceResponse.message.ts';
+export { UnfreezeWalletRequestMessage } from '@payap/wallets/generated/v1/messages/unfreezeWalletRequest.message.ts';
+export { UnfreezeWalletResponseMessage } from '@payap/wallets/generated/v1/messages/unfreezeWalletResponse.message.ts';
 export { WalletsServiceClient } from '@payap/wallets/generated/v1/services/wallets.service.ts';

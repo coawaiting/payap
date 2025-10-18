@@ -26,7 +26,7 @@ describe('Wallets service tests', async () => {
     );
   });
 
-  it('should create a wallet', async () => {
+  it('Should create a wallet', async () => {
     const userUuid = randomUUID();
 
     const createWalletResponseMessage =
@@ -57,6 +57,7 @@ describe('Wallets service tests', async () => {
     const expectedShowWalletResponseMessage: ShowWalletResponseMessage =
       {
         balance: '0',
+        isFrozen: false,
         userUuid: userUuid,
         walletUuid: createWalletResponseMessage.walletUuid,
       };

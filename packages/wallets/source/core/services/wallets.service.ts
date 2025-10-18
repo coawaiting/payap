@@ -23,6 +23,12 @@ export abstract class AbstractWalletsService {
     wallet: WalletEntity;
   }): Promise<WalletEntity>;
 
+  abstract freezeWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }): Promise<WalletEntity>;
+
   abstract increaseWalletBalance({
     value,
     wallet,
@@ -50,5 +56,11 @@ export abstract class AbstractWalletsService {
     wallet: {
       uuid: string;
     };
+  }): Promise<WalletEntity>;
+
+  abstract unfreezeWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
   }): Promise<WalletEntity>;
 }

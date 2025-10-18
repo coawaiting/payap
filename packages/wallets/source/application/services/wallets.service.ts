@@ -57,6 +57,20 @@ export class WalletsService implements AbstractWalletsService {
     return wallet;
   }
 
+  public async freezeWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }) {
+    wallet.freeze();
+
+    await this.walletsRepository.saveWallet({
+      wallet,
+    });
+
+    return wallet;
+  }
+
   public async increaseWalletBalance({
     value,
     wallet,
@@ -119,6 +133,20 @@ export class WalletsService implements AbstractWalletsService {
     if (wallet === null) {
       throw new WalletNotFoundException();
     }
+
+    return wallet;
+  }
+
+  public async unfreezeWallet({
+    wallet,
+  }: {
+    wallet: WalletEntity;
+  }) {
+    wallet.unfreeze();
+
+    await this.walletsRepository.saveWallet({
+      wallet,
+    });
 
     return wallet;
   }
